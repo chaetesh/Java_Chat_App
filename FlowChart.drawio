@@ -1,0 +1,53 @@
+<mxfile host="65bd71144e">
+    <diagram id="MDHXABNlKQsNl8mTAnal" name="Page-1">
+        <mxGraphModel dx="876" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Start" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;shadow=0;fontSize=13;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="341" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Create Socket for Client&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="331" y="160" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1" target="8">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="391" y="220" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="391" y="220" as="sourcePoint"/>
+                        <mxPoint x="391" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" value="Initialize the Connection with Server" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="331" y="270" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1" target="11">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="391" y="330" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="391" y="330" as="sourcePoint"/>
+                        <mxPoint x="391" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontStyle=1" edge="1" parent="1" source="11" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Send &amp;amp; Recieve messages using Socket and Display them in Console" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="331" y="380" width="119" height="88" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="End" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;shadow=0;fontSize=13;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="341" y="502" width="100" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
