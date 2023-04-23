@@ -13,69 +13,31 @@ class Server {
             // creating server in port 7777
             server = new ServerSocket(7777);
             System.out.println("Waiting for Connection.........");
+
+            while(!server.isClosed()){
             // Accepts request from client
             socket = server.accept();
+            System.out.println("New Client Connected");
 
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
-
-            startReading();
-            startWriting();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            ClientHandler clientHandler = new ClientHandler(socket);
+            Thread thread = new Thread(clientHandler);
+            thread.start();
+            }
+        } 
+        catch (Exception e) {
+            closeServerSocket();
         }
     }
 
-    // Checking for messages from client and updating it
-    public void startReading() {
-        Runnable r1 = () -> {
-
-            System.out.println("Reading Started");
-
-            try {
-                String msg;
-                while (true) {
-                    msg = br.readLine();
-                    if (msg.equals("quit")) {
-                        System.out.println("Client Exited the Chat!!");
-                        socket.close();
-                        break;
-                    }
-                    System.out.println("Client: " + msg);
-                }
-            } catch (IOException e) {
-                // e.printStackTrace();
-                System.out.println("Connection Closed");
+    public void closeServerSocket(){
+        try{
+            if(server != null){
+                server.close();
             }
-        };
-
-        new Thread(r1).start();
-    }
-
-    // Takes data from user and sends to client
-    public void startWriting() {
-        Runnable r2 = () -> {
-            try {
-                while (true && !socket.isClosed()) {
-                    BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
-                    String content = br1.readLine();
-                    out.println(content);
-                    out.flush();
-
-                    if (content.equals("quit")) {
-                        socket.close();
-                        break;
-                    }
-                }
-            }
-             catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
-        };
-
-        new Thread(r2).start();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
