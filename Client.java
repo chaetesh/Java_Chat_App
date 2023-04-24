@@ -1,18 +1,27 @@
 import java.net.*;
 import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.*;
 
-public class Client {
+public class Client extends JFrame {
     Socket socket;
     BufferedReader br;
-    BufferedWriter out;    
+    BufferedWriter out;
     String clientName;
+
+    JLabel heading = new JLabel("Client Area");
+    JTextArea messagArea = new JTextArea();
+    JTextField messageInput = new JTextField();
+    Font font = new Font("Roboto", Font.PLAIN, 20);
 
     public Client() {
         try {
             System.out.println("Enter Username: ");
             Scanner sc = new Scanner(System.in);
-            clientName = sc.nextLine(); 
+            clientName = sc.nextLine();
 
             // Giving Ip address and port to establish the connection
             socket = new Socket("127.0.0.1", 7777);
@@ -21,13 +30,80 @@ public class Client {
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
+            createGUI();
+            handleEvents();
+
             startReading();
-            startWriting();
+            // startWriting();
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
-            
+
         }
+    }
+
+    public void handleEvents() {
+        messageInput.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // 10 is keycode for enter
+                if (e.getKeyCode() == 10) {
+                    String sendMessage = messageInput.getText();
+                    messagArea.append("Me: " + sendMessage + "\n");
+                    try {
+                        out.write(clientName + ": " + sendMessage);
+                        out.newLine();
+                        out.flush();
+                        messageInput.setText("");
+                        messageInput.requestFocus();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+
+        });
+    }
+
+    public void createGUI() {
+        // GUI
+        this.setTitle("Client Messenger");
+        this.setSize(550, 600);
+        this.setLocationRelativeTo(null); // Sets window location to middle
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Component
+        heading.setFont(font);
+        messagArea.setFont(font);
+        messageInput.setFont(font);
+        ImageIcon icon = new ImageIcon("chat.png");
+        Image scaleImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT); // resizing image
+        heading.setIcon(new ImageIcon(scaleImage));
+        heading.setHorizontalTextPosition(SwingConstants.CENTER);
+        heading.setVerticalTextPosition(SwingConstants.BOTTOM);
+        heading.setHorizontalAlignment(SwingConstants.CENTER);
+        heading.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // frame layout
+        this.setLayout(new BorderLayout());
+
+        // adding the components to frame
+        this.add(heading, BorderLayout.NORTH);
+        this.add(messagArea, BorderLayout.CENTER);
+        this.add(messageInput, BorderLayout.SOUTH);
+
+        this.setVisible(true);
     }
 
     // Checking for messages from client and updating it
@@ -38,14 +114,14 @@ public class Client {
             String msgFromGroupChat;
 
             while (!socket.isClosed()) {
-            try {
-                    msgFromGroupChat = br.readLine();    
-                    System.out.println(msgFromGroupChat);
-                }
-            catch (IOException e) {
+                try {
+                    msgFromGroupChat = br.readLine();
+                    // System.out.println(msgFromGroupChat);
+                    messagArea.append(msgFromGroupChat + "\n");
+                } catch (IOException e) {
                     closeEverything(socket, br, out);
                 }
-            } 
+            }
         };
 
         new Thread(r1).start();
@@ -67,8 +143,7 @@ public class Client {
                     out.newLine();
                     out.flush();
                 }
-            } 
-            catch (Exception e) {
+            } catch (Exception e) {
                 closeEverything(socket, br, out);
             }
         };
@@ -76,19 +151,18 @@ public class Client {
         new Thread(r2).start();
     }
 
-    public void closeEverything(Socket socket,BufferedReader br,BufferedWriter out){
-        try{
-            if(socket != null){
+    public void closeEverything(Socket socket, BufferedReader br, BufferedWriter out) {
+        try {
+            if (socket != null) {
                 socket.close();
             }
-            if(br != null){
+            if (br != null) {
                 br.close();
             }
-            if(out != null){
+            if (out != null) {
                 out.close();
             }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
